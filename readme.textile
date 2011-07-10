@@ -1,0 +1,22 @@
+h1. Maven Bash Completion
+
+Maven by default does not distribute with a Bash auto completion script, only "a very simple guide":http://maven.apache.org/guides/mini/guide-bash-m2-completion.html is provide. This script gives you more to help your daily Maven build.
+
+h2. Installation
+
+* Download bash_completion.bash and save it a place you want, like _~/.maven_bash_completion.bash_.
+* Let your login shell load it automatically by adding a line to _~/.bash_profile_:
+@.~/.maven_bash_completion.bash@
+
+h2. Usage
+
+To list common lifecycle phases:
+@$ mvn [TAB][TAB]@
+
+To list available options:
+@$ mvn -[TAB][TAB]@
+
+To list available goals for common used plugins:
+@$ mvn help:[TAB][TAB]@
+
+
