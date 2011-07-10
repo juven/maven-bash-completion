@@ -4,9 +4,10 @@ Maven by default does not distribute with a Bash auto completion script, only "a
 
 h2. Installation
 
-# Download bash_completion.bash and save it a place you want, like _~/.maven_bash_completion.bash_.
-# Let your login shell load it automatically by adding the line below to _~/.bash_profile_:
-@. ~/.maven\_bash\_completion.bash@
+Download bash_completion.bash and save it a place you want, like _~/.maven_bash_completion.bash_.
+
+Make your login shell load the script automatically by adding the line below to _~/.bash_profile_:
+@. ~/.maven_bash_completion.bash@
 
 h2. Usage
 
