@@ -6,7 +6,7 @@ h2. Installation
 
 # Download bash_completion.bash and save it a place you want, like _~/.maven_bash_completion.bash_.
 # Let your login shell load it automatically by adding the line below to _~/.bash_profile_:
-@. ~/.maven_bash_completion.bash@
+@. ~/.maven\_bash\_completion.bash@
 
 h2. Usage
 
