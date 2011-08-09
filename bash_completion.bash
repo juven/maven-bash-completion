@@ -41,7 +41,7 @@ _mvn()
     plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
     plugin_goals_exec="exec:exec|exec:java"
-    plugin_goals_versions="verions:set|versons:commit|versions:revert"
+    plugin_goals_versions="verions:set|versions:commit|versions:revert"
 
     local IFS=$'|\n'
 
