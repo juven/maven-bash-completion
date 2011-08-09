@@ -43,9 +43,13 @@ _mvn()
     plugin_goals_exec="exec:exec|exec:java"
     plugin_goals_versions="verions:set|versons:commit|versions:revert"
 
+    options="-Dmaven.test.skip=true|-DskipTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true"
+
     local IFS=$'|\n'
 
-    if [[ ${cur} == -* ]] ; then
+    if [[ ${cur} == -D* ]] ; then
+      COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
+    elif [[ ${cur} == -* ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -S ' ' -- ${cur}) )
     elif [[ ${prev} == -pl ]] ; then
         if [[ ${cur} == *,* ]] ; then
