@@ -36,7 +36,7 @@ _mvn()
     plugin_goals_eclipse="eclipse:clean|eclipse:eclipse"
     plugin_goals_idea="idea:clean|idea:idea"
     
-    plugin_goals_jetty="jetty:run"
+    plugin_goals_jetty="jetty:run|jetty:run-exploded"
     plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
     plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
