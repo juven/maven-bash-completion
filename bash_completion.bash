@@ -8,7 +8,7 @@ _mvn()
     opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
 
     common_lifecycle_phases="clean|process-resources|compile|process-test-resources|test-compile|test|package|install|deploy|site"
-    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions"
+    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions|war|ear|ejb"
     
     plugin_goals_deploy="deploy:deploy-file"
     plugin_goals_failsafe="failsafe:integration-test|failsafe:verify"
@@ -42,6 +42,10 @@ _mvn()
     plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
     plugin_goals_exec="exec:exec|exec:java"
     plugin_goals_versions="verions:set|versons:commit|versions:revert"
+
+    plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
+    plugin_goals_ear="ear:ear|ear:generate-application-xml"
+    plugin_goals_ejb="ejb:ejb"
 
     local IFS=$'|\n'
 
