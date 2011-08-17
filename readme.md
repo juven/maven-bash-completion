@@ -11,20 +11,20 @@ Maven by default does not distribute with a Bash auto completion script, only [a
 ## Usage
 
 To list common lifecycle phases:  
-`$ mvn [TAB][TAB]` (list all common used lifecycle phases)
-`$ mvn cl[TAB][TAB]` (complete to 'clean')
+`$ mvn [TAB][TAB]` (list all common used lifecycle phases)  
+`$ mvn cl[TAB][TAB]` (complete to 'clean')  
 
-To list prefix of common used plugins:
-`$ mvn ar[TAB][TAB]` (complete to 'archetype:')
-`$ mvn depe[TAB][TAB]` (complete to 'dependency:')
+To list prefix of common used plugins:  
+`$ mvn ar[TAB][TAB]` (complete to 'archetype:')  
+`$ mvn depe[TAB][TAB]` (complete to 'dependency:')  
 
 To list available goals for common used plugins:  
-`$ mvn help:[TAB][TAB]` (list all available goals of maven-help-plugin)
-'$ mvn dependency:[TAB][TAB]' (list all available goals of maven-dependency-plugin)
+`$ mvn help:[TAB][TAB]` (list all available goals of maven-help-plugin)  
+'$ mvn dependency:[TAB][TAB]' (list all available goals of maven-dependency-plugin)  
 
 To list available options:  
-`$ mvn -[TAB][TAB]`
+`$ mvn -[TAB][TAB]`  
 
-To list -D options (like -DskipTests):
-`$ mvn -D[TAB][TAB]`
+To list -D options (like -DskipTests):  
+`$ mvn -D[TAB][TAB]`  
 
