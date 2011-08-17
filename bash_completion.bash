@@ -47,9 +47,13 @@ _mvn()
     plugin_goals_ear="ear:ear|ear:generate-application-xml"
     plugin_goals_ejb="ejb:ejb"
 
+    options="-Dmaven.test.skip=true|-DskipTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true"
+
     local IFS=$'|\n'
 
-    if [[ ${cur} == -* ]] ; then
+    if [[ ${cur} == -D* ]] ; then
+      COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
+    elif [[ ${cur} == -* ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -S ' ' -- ${cur}) )
     elif [[ ${prev} == -pl ]] ; then
         if [[ ${cur} == *,* ]] ; then
