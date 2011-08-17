@@ -20,7 +20,7 @@ To list prefix of common used plugins:
 
 To list available goals for common used plugins:  
 `$ mvn help:[TAB][TAB]` (list all available goals of maven-help-plugin)  
-'$ mvn dependency:[TAB][TAB]' (list all available goals of maven-dependency-plugin)  
+`$ mvn dependency:[TAB][TAB]` (list all available goals of maven-dependency-plugin)  
 
 To list available options:  
 `$ mvn -[TAB][TAB]`  
