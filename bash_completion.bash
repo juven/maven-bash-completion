@@ -69,9 +69,9 @@ _mvn()
           fi
         done
     else
-        if echo "${common_lifecycle_phases}" | /bin/grep -q "${cur}"; then
+        if echo "${common_lifecycle_phases}" | grep -q "${cur}" ; then
           COMPREPLY=( $(compgen -S ' ' -W "${common_lifecycle_phases}" -- ${cur}) )
-        elif echo "${common_plugins}" | /bin/grep -q "${cur}"; then
+        elif echo "${common_plugins}" | grep -q "${cur}"; then
           COMPREPLY=( $(compgen -S ':' -W "${common_plugins}" -- ${cur}) )
         fi
     fi
