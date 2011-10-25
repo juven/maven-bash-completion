@@ -28,3 +28,5 @@ To list available options:
 To list -D options (like -DskipTests):  
 `$ mvn -D[TAB][TAB]`  
 
+To list available profiles:  
+`$ mvn -P[TAB][TAB]`
