@@ -8,7 +8,7 @@ _mvn()
     opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
 
     common_lifecycle_phases="clean|process-resources|compile|process-test-resources|test-compile|test|package|install|deploy|site"
-    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions|war|ear|ejb|android|scm"
+    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions|war|ear|ejb|android|scm|nexus|repository"
     
     plugin_goals_deploy="deploy:deploy-file"
     plugin_goals_failsafe="failsafe:integration-test|failsafe:verify"
@@ -47,22 +47,33 @@ _mvn()
     plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
     plugin_goals_ear="ear:ear|ear:generate-application-xml"
     plugin_goals_ejb="ejb:ejb"
-    plugin_goals_android="android:apk|android:apklib|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign"
+    plugin_goals_android="android:apk|android:apklib|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:manifest-update|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign"
+    plugin_goals_nexus="nexus:staging-list|nexus:staging-close|nexus:staging-drop|nexus:staging-release|nexus:staging-build-promotion|nexus:staging-profiles-list|nexus:settings-download"
+    plugin_goals_repository="repository:bundle-create|repository:bundle-pack|repository:help"
 
     options="-Dmaven.test.skip=true|-DskipTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true"
+
+    profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>/-P/' | sed 's/<\/id>//g'`
+    profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 pom.xml | grep -e "<id>.*</id>" | sed 's/.*<id>/-P/' | sed 's/<\/id>//g'`
 
     local IFS=$'|\n'
 
     if [[ ${cur} == -D* ]] ; then
       COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
+
+    elif [[ ${cur} == -P* ]] ; then
+      COMPREPLY=( $(compgen -S ' ' -W "${profile_settings}|${profile_pom}" -- ${cur}) )
+
     elif [[ ${cur} == -* ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -S ' ' -- ${cur}) )
+
     elif [[ ${prev} == -pl ]] ; then
         if [[ ${cur} == *,* ]] ; then
             COMPREPLY=( $(compgen -d -S ',' -P "${cur%,*}," -- ${cur##*,}) )
         else
             COMPREPLY=( $(compgen -d -S ',' -- ${cur}) )
         fi
+
     elif [[ ${cur} == *:* ]] ; then
         for plugin in $common_plugins; do
           if [[ ${cur} == ${plugin}:* ]]; then
@@ -70,6 +81,7 @@ _mvn()
             COMPREPLY=( $(compgen -W "${!var_name}" -S ' ' -- ${cur}) )
           fi
         done
+
     else
         if echo "${common_lifecycle_phases}" | tr '|' '\n' | grep -q -e "^${cur}" ; then
           COMPREPLY=( $(compgen -S ' ' -W "${common_lifecycle_phases}" -- ${cur}) )
