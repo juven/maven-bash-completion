@@ -8,7 +8,7 @@ _mvn()
     opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
 
     common_lifecycle_phases="clean|process-resources|compile|process-test-resources|test-compile|test|package|install|deploy|site"
-    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions|war|ear|ejb|android|scm|nexus|repository|sonar"
+    common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|tomcat6|tomcat7|exec|versions|war|ear|ejb|android|scm|nexus|repository|sonar"
     
     plugin_goals_deploy="deploy:deploy-file"
     plugin_goals_failsafe="failsafe:integration-test|failsafe:verify"
@@ -40,6 +40,8 @@ _mvn()
     plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
     plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
+    plugin_goals_tomcat6="tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
+    plugin_goals_tomcat7="tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
     plugin_goals_exec="exec:exec|exec:java"
     plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
     plugin_goals_scm="scm:add|scm:checkin|scm:checkout|scm:update|scm:status"
