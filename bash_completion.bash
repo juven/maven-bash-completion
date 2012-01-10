@@ -6,6 +6,7 @@ _mvn()
     prev="${COMP_WORDS[COMP_CWORD-1]}"
 
     opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
+    long_opts="--also-make|--also-make-dependents|--batch-mode|--strict-checksums|--lax-checksums|--check-plugin-updates|--define|--errors|--encrypt-master-password|--encrypt-password|--file|--fail-at-end|--fail-fast|--fail-never|--global-settings|--help|--log-file|--non-recursive|--no-plugin-registry|--no-plugin-updates|--no-snapshot-updates|--offline|--activate-profiles|--projects|--quiet|--resume-from|--settings|--threads|--toolchains|--update-snapshots|--update-plugins|--show-version|--version|--debug"
 
     common_lifecycle_phases="clean|process-resources|compile|process-test-resources|test-compile|test|package|install|deploy|site"
     common_plugins="deploy|failsafe|install|site|surefire|checkstyle|javadoc|jxr|pmd|ant|antrun|archetype|assembly|dependency|enforcer|gpg|help|release|repository|source|eclipse|idea|jetty|cargo|jboss|tomcat|exec|versions|war|ear|ejb|android|scm|nexus|repository|sonar"
@@ -65,6 +66,9 @@ _mvn()
 
     elif [[ ${cur} == -P* ]] ; then
       COMPREPLY=( $(compgen -S ' ' -W "${profile_settings}|${profile_pom}" -- ${cur}) )
+
+    elif [[ ${cur} == --* ]] ; then
+      COMPREPLY=( $(compgen -W "${long_opts}" -S ' ' -- ${cur}) )
 
     elif [[ ${cur} == -* ]] ; then
         COMPREPLY=( $(compgen -W "${opts}" -S ' ' -- ${cur}) )
