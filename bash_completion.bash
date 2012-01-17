@@ -84,6 +84,9 @@ _mvn()
             COMPREPLY=( $(compgen -d -S ',' -- ${cur}) )
         fi
 
+    elif [[ ${prev} == -rf || ${prev} == --resume-from ]] ; then
+        COMPREPLY=( $(compgen -d -- ${cur}) )
+
     elif [[ ${cur} == *:* ]] ; then
         for plugin in $common_plugins; do
           if [[ ${cur} == ${plugin}:* ]]; then
