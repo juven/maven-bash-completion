@@ -25,7 +25,7 @@ _mvn()
     plugin_goals_ant="ant:ant|ant:clean"
     plugin_goals_antrun="antrun:run"
     plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
-    plugin_goals_assembly="archetype:single"
+    plugin_goals_assembly="assembly:single|assembly:assembly"
     plugin_goals_dependency="dependency:analyze|dependency:list|dependency:resolve|dependency:tree"
     plugin_goals_enforcer="enforcer:enforce"
     plugin_goals_gpg="gpg:sign|gpg:sign-and-deploy-file"
