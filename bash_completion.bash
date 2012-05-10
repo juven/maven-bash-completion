@@ -58,7 +58,6 @@ _mvn()
     plugin_goals_license="license:format|license:check"
     plugin_goals_hibernate3="hibernate3:hbm2ddl|hibernate3:help"
     plugin_goals_liquibase="liquibase:changelogSync|liquibase:changelogSyncSQL|liquibase:clearCheckSums|liquibase:dbDoc|liquibase:diff|liquibase:dropAll|liquibase:help|liquibase:migrate|liquibase:listLocks|liquibase:migrateSQL|liquibase:releaseLocks|liquibase:rollback|liquibase:rollbackSQL|liquibase:status|liquibase:tag|liquibase:update|liquibase:updateSQL|liquibase:updateTestingRollback"
-
     plugin_goals_flyway="flyway:clean|flyway:history|flyway:init|flyway:migrate|flyway:status|flyway:validate"
 
     options="-Dmaven.test.skip=true|-DskipTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven"
