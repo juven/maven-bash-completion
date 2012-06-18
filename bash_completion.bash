@@ -51,7 +51,7 @@ _mvn()
     plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
     plugin_goals_ear="ear:ear|ear:generate-application-xml"
     plugin_goals_ejb="ejb:ejb"
-    plugin_goals_android="android:apk|android:apklib|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:manifest-update|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign"
+    plugin_goals_android="android:apk|android:apklib|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:manifest-update|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign|android:devices"
     plugin_goals_nexus="nexus:staging-list|nexus:staging-close|nexus:staging-drop|nexus:staging-release|nexus:staging-build-promotion|nexus:staging-profiles-list|nexus:settings-download"
     plugin_goals_repository="repository:bundle-create|repository:bundle-pack|repository:help"
 
