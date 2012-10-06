@@ -2,8 +2,7 @@ _mvn()
 {
     local cur prev opts
     COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    _get_comp_words_by_ref -n : cur prev
 
     opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
     long_opts="--also-make|--also-make-dependents|--batch-mode|--strict-checksums|--lax-checksums|--check-plugin-updates|--define|--errors|--encrypt-master-password|--encrypt-password|--file|--fail-at-end|--fail-fast|--fail-never|--global-settings|--help|--log-file|--non-recursive|--no-plugin-registry|--no-plugin-updates|--no-snapshot-updates|--offline|--activate-profiles|--projects|--quiet|--resume-from|--settings|--threads|--toolchains|--update-snapshots|--update-plugins|--show-version|--version|--debug"
@@ -106,9 +105,9 @@ _mvn()
           COMPREPLY=( $(compgen -S ':' -W "${common_plugins}" -- ${cur}) )
         fi
     fi
+
+    __ltrim_colon_completions "$cur"
 }
 
 complete -o default -F _mvn -o nospace mvn
 complete -o default -F _mvn -o nospace mvnDebug
-
-COMP_WORDBREAKS=${COMP_WORDBREAKS//:}
