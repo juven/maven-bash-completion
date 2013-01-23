@@ -27,7 +27,7 @@ _mvn()
     plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
     plugin_goals_assembly="assembly:single|assembly:assembly"
     plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:list|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
-    plugin_goals_enforcer="enforcer:enforce"
+    plugin_goals_enforcer="enforcer:enforce|enforcer:display-info"
     plugin_goals_gpg="gpg:sign|gpg:sign-and-deploy-file"
     plugin_goals_help="help:active-profiles|help:all-profiles|help:describe|help:effective-pom|help:effective-settings|help:evaluate|help:expressions|help:system"
     plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
