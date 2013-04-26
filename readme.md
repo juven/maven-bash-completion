@@ -4,13 +4,14 @@ Maven by default does not distribute with a Bash auto completion script, only [a
 
 ## Installation
 
-* Download bash_completion.bash and save it to any place you want, like *~/.maven_bash_completion.bash*.
-* Make your login shell load the script automatically by adding the line below to *~/.bash_profile* (note the space after dot):  
+1. Download bash_completion.bash and save it to any place you want, like *~/.maven_bash_completion.bash*.
+2. Make your login shell load the script automatically by adding the line below to *~/.bash_profile* (note the space after dot):  
 `. ~/.maven_bash_completion.bash`
 
 An example install as a one-line command line call for Debian and other distro is
 
 `sudo wget https://raw.github.com/juven/maven-bash-completion/master/bash_completion.bash --output-document /etc/bash_completion.d/mvn`
+
 ## Usage
 
 To list common lifecycle phases:  
@@ -31,5 +32,11 @@ To list available options:
 To list -D options (like -DskipTests):  
 `$ mvn -D[TAB][TAB]`  
 
-To list available profiles:  
-`$ mvn -P[TAB][TAB]`
+To list available profiles (from settings.xml and pom.xml):  
+`$ mvn -P [TAB][TAB]`  
+`$ mvn -P myapp-core,[TAB][TAB]` (multiple profles supported) 
+
+To list simple reactor projects:  
+`$ mvn -pl [TAB][TAB]`  
+`$ mvn -pl myapp-core,[TAB][TAB]`  
+`$ mvn -rf [TAB][TAB]`
