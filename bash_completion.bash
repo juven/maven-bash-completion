@@ -64,16 +64,21 @@ _mvn()
 
     options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip"
 
-    profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>/-P/' | sed 's/<\/id>.*//g'`
-    profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 pom.xml | grep -e "<id>.*</id>" | sed 's/.*<id>/-P/' | sed 's/<\/id>.*//g'`
+    local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+    local profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 pom.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+    local profiles="${profile_settings}|${profile_pom}"
 
     local IFS=$'|\n'
 
     if [[ ${cur} == -D* ]] ; then
       COMPREPLY=( $(compgen -S ' ' -W "${options}" -- ${cur}) )
 
-    elif [[ ${cur} == -P* ]] ; then
-      COMPREPLY=( $(compgen -S ' ' -W "${profile_settings}|${profile_pom}" -- ${cur}) )
+    elif [[ ${prev} == -P ]] ; then
+      if [[ ${cur} == *,* ]] ; then
+        COMPREPLY=( $(compgen -S ',' -W "${profiles}" -P "${cur%,*}," -- ${cur##*,}) )
+      else
+        COMPREPLY=( $(compgen -S ',' -W "${profiles}" -- ${cur}) )
+      fi
 
     elif [[ ${cur} == --* ]] ; then
       COMPREPLY=( $(compgen -W "${long_opts}" -S ' ' -- ${cur}) )
