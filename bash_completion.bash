@@ -46,10 +46,31 @@ __ltrim_colon_completions()
 	fi
 }
 
+function_exists __pom_hierarchy ||
+__pom_hierarchy()
+{
+    POM_HIERARCHY+=('pom.xml')
+
+    file="pom.xml"
+    prefix=""
+    while grep -q "<parent>" "$file"; do
+        new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+        if [ -z "$new_file" ]; then 
+            file=$prefix"../$file"
+        else
+            file=$prefix$new_file
+        fi
+        prefix="../"$prefix
+        POM_HIERARCHY+=("$file")
+    done
+}
+
 _mvn()
 {
     local cur prev
     COMPREPLY=()
+    POM_HIERARCHY=()
+    __pom_hierarchy
     _get_comp_words_by_ref -n : cur prev
 
     local opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
@@ -111,8 +132,14 @@ _mvn()
     local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip"
 
     local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
-    local profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 pom.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
-    local profiles="${profile_settings}|${profile_pom}"
+    
+    local profiles="${profile_settings}|"
+    for item in ${POM_HIERARCHY[*]}
+    do
+        local profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 $item | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+        local profiles="${profiles}|${profile_pom}"
+    done
+
     local IFS=$'|\n'
 
     if [[ ${cur} == -D* ]] ; then
