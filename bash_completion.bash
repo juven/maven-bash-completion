@@ -63,19 +63,25 @@ __find_mvn_projects()
 function_exists __pom_hierarchy ||
 __pom_hierarchy()
 {
-    POM_HIERARCHY+=('pom.xml')
-
-    file="pom.xml"
-    prefix=""
-    while grep -q "<parent>" "$file"; do
+    file=`readlink -e pom.xml`
+    POM_HIERARCHY+=("$file")
+    while grep -q "<parent>" $file; do
+	##look for a new relativePath for parent pom.xml
         new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
-        if [ -z "$new_file" ]; then 
-            file=$prefix"../$file"
-        else
-            file=$prefix$new_file
+
+	## <parent> is present but not defined. Asume ../pom.xml
+	if [ -z "$new_file" ]; then
+	    new_file="../pom.xml"
+	fi 
+
+	## if file exists continue else break
+	new_pom=`readlink -e "${file%/*}/$new_file"`
+        if [ -n "$new_pom" ]; then 
+            file=$new_pom
+	else 
+	    break
         fi
-        prefix="../"$prefix
-        POM_HIERARCHY+=("$file")
+	POM_HIERARCHY+=("$file")
     done
 }
 
@@ -155,7 +161,7 @@ _mvn()
     local profiles="${profile_settings}|"
     for item in ${POM_HIERARCHY[*]}
     do
-        local profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 $item | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+        local profile_pom=`[ -e $item ] && grep -e "<profile>" -A 1 $item | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
         local profiles="${profiles}|${profile_pom}"
     done
 
