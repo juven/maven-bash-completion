@@ -65,7 +65,7 @@ __pom_hierarchy()
 {
     file=`readlink -e pom.xml`
     POM_HIERARCHY+=("$file")
-    while grep -q "<parent>" $file; do
+    while [ -n "$file" ] && grep -q "<parent>" $file; do
 	##look for a new relativePath for parent pom.xml
         new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
