@@ -46,14 +46,41 @@ __ltrim_colon_completions()
 	fi
 }
 
+function_exists _realpath ||
+_realpath () 
+{
+    if [[ -f "$1" ]]
+    then
+        # file *must* exist
+        if cd "$(echo "${1%/*}")" &>/dev/null
+        then
+	    # file *may* not be local
+	    # exception is ./file.ext
+	    # try 'cd .; cd -;' *works!*
+ 	    local tmppwd="$PWD"
+	    cd - &>/dev/null
+        else
+	    # file *must* be local
+	    local tmppwd="$PWD"
+        fi
+    else
+        # file *cannot* exist
+        return 1 # failure    
+    fi
+
+    # reassemble realpath
+    echo "$tmppwd"/"${1##*/}"
+    return 1 #success
+}
+
 function_exists __pom_hierarchy ||
 __pom_hierarchy()
 {
-    file=`readlink -e pom.xml`
+    local file=`_realpath "pom.xml"`
     POM_HIERARCHY+=("$file")
     while [ -n "$file" ] && grep -q "<parent>" $file; do
 	##look for a new relativePath for parent pom.xml
-        new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+        local new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
 	## <parent> is present but not defined. Asume ../pom.xml
 	if [ -z "$new_file" ]; then
@@ -61,7 +88,7 @@ __pom_hierarchy()
 	fi 
 
 	## if file exists continue else break
-	new_pom=`readlink -e "${file%/*}/$new_file"`
+	new_pom=`_realpath "${file%/*}/$new_file"`
         if [ -n "$new_pom" ]; then 
             file=$new_pom
 	else 
