@@ -60,6 +60,7 @@ _mvn()
     local common_site_lifecycle="pre-site|site|post-site|site-deploy"
     local common_lifecycle_phases="${common_clean_lifecycle}|${common_default_lifecycle}|${common_site_lifecycle}"
 
+    local plugin_goals_appengine="appengine:backends_configure|appengine:backends_delete|appengine:backends_rollback|appengine:backends_start|appengine:backends_stop|appengine:backends_update|appengine:debug|appengine:devserver|appengine:devserver_start|appengine:devserver_stop|appengine:endpoints_get_client_lib|appengine:endpoints_get_discovery_doc|appengine:enhance|appengine:rollback|appengine:set_default_version|appengine:start_module_version|appengine:stop_module_version|appengine:update|appengine:update_cron|appengine:update_dos|appengine:update_indexes|appengine:update_queues|appengine:vacuum_indexes"
     local plugin_goals_android="android:apk|android:apklib|android:clean|android:deploy|android:deploy-dependencies|android:dex|android:emulator-start|android:emulator-stop|android:emulator-stop-all|android:generate-sources|android:help|android:instrument|android:manifest-update|android:pull|android:push|android:redeploy|android:run|android:undeploy|android:unpack|android:version-update|android:zipalign|android:devices"
     local plugin_goals_ant="ant:ant|ant:clean"
     local plugin_goals_antrun="antrun:run"
