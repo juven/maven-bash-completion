@@ -87,6 +87,7 @@ _mvn()
     local plugin_goals_install="install:install-file"
     local plugin_goals_javadoc="javadoc:javadoc|javadoc:jar|javadoc:aggregate"
     local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
+    local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
     local plugin_goals_jetty="jetty:run|jetty:run-exploded"
     local plugin_goals_jxr="jxr:jxr"
     local plugin_goals_license="license:format|license:check"
@@ -105,7 +106,8 @@ _mvn()
     local plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
     local plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
 
-    local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '\n' '|'`
+    ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
+    local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '_' '-' | tr '\n' '|'`
 
     local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip"
 
@@ -144,7 +146,8 @@ _mvn()
         local plugin
         for plugin in $common_plugins; do
           if [[ ${cur} == ${plugin}:* ]]; then
-            var_name="plugin_goals_${plugin}"
+            ## note that here is an 'unreplace', see the comment at common_plugins
+            var_name="plugin_goals_${plugin//-/_}"
             COMPREPLY=( $(compgen -W "${!var_name}" -S ' ' -- ${cur}) )
           fi
         done
