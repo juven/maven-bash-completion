@@ -46,6 +46,20 @@ __ltrim_colon_completions()
 	fi
 }
 
+function_exists __find_mvn_projects ||
+__find_mvn_projects()
+{
+    find . -name 'pom.xml' -not -path '*/target/*' -prune | while read LINE ; do
+        local withoutPom=${LINE%/pom.xml}
+        local module=${withoutPom#./}
+        if [[ -z ${module} ]]; then
+            echo "."
+        else
+            echo ${module}
+        fi
+    done
+}
+
 _mvn()
 {
     local cur prev
@@ -136,9 +150,9 @@ _mvn()
 
     elif [[ ${prev} == -pl ]] ; then
         if [[ ${cur} == *,* ]] ; then
-            COMPREPLY=( $(compgen -d -S ',' -P "${cur%,*}," -- ${cur##*,}) )
+            COMPREPLY=( $(compgen -W "$(__find_mvn_projects)" -S ',' -P "${cur%,*}," -- ${cur##*,}) )
         else
-            COMPREPLY=( $(compgen -d -S ',' -- ${cur}) )
+            COMPREPLY=( $(compgen -W "$(__find_mvn_projects)" -S ',' -- ${cur}) )
         fi
 
     elif [[ ${prev} == -rf || ${prev} == --resume-from ]] ; then
