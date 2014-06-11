@@ -49,7 +49,7 @@ __ltrim_colon_completions()
 function_exists __find_mvn_projects ||
 __find_mvn_projects()
 {
-    find -name 'pom.xml' -not -path '*/target/*' -prune | while read LINE ; do
+    find . -name 'pom.xml' -not -path '*/target/*' -prune | while read LINE ; do
         local withoutPom=${LINE%/pom.xml}
         local module=${withoutPom#./}
         if [[ -z ${module} ]]; then
