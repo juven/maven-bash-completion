@@ -120,7 +120,7 @@ _mvn()
     local plugin_goals_tomcat7="tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
     local plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
     local plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
-    local plugin_goals_vertx="vertx:init|vertx:runMod|vertx:pullInDeps|vert:fatJar"
+    local plugin_goals_vertx="vertx:init|vertx:runMod|vertx:pullInDeps|vertx:fatJar"
     local plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
 
     ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
