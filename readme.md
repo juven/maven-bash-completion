@@ -14,7 +14,7 @@ An example install as a one-line command line call for Debian and other distro i
 
 Example install for MacOS X using the [Homebrew](http://brew.sh/) package manager:
 
-1. `brew tap homebrew/completion` (add Git repository with completions to list of formulae, if not already done)
+1. `brew tap homebrew/completions` (add Git repository with completions to list of formulae, if not already done)
 2. `brew install maven-completion` (install maven-completion formula)
 
 ## Usage
