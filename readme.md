@@ -45,3 +45,8 @@ To list simple reactor projects:
 `$ mvn -pl [TAB][TAB]`  
 `$ mvn -pl myapp-core,[TAB][TAB]`  
 `$ mvn -rf [TAB][TAB]`
+
+## FAQ
+
+Q: I get error message: `__git_reassemble_comp_words_by_ref: command not found`  
+A: Please install git-bash-completion first.
