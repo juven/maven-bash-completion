@@ -4,11 +4,13 @@ Maven by default does not distribute with a Bash auto completion script, only [a
 
 ## Installation
 
+Example install manually:
+
 1. Download bash_completion.bash and save it to any place you want, like *~/.maven_bash_completion.bash*.
 2. Make your login shell load the script automatically by adding the line below to *~/.bash_profile* (note the space after dot):  
 `. ~/.maven_bash_completion.bash`
 
-An example install as a one-line command line call for Debian and other distro is
+Example install as a one-line command line call for Debian and other distro:
 
 `sudo wget https://raw.github.com/juven/maven-bash-completion/master/bash_completion.bash --output-document /etc/bash_completion.d/mvn`
 
