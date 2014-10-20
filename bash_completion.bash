@@ -60,10 +60,64 @@ __find_mvn_projects()
     done
 }
 
+function_exists _realpath ||
+_realpath () 
+{
+    if [[ -f "$1" ]]
+    then
+        # file *must* exist
+        if cd "$(echo "${1%/*}")" &>/dev/null
+        then
+	    # file *may* not be local
+	    # exception is ./file.ext
+	    # try 'cd .; cd -;' *works!*
+ 	    local tmppwd="$PWD"
+	    cd - &>/dev/null
+        else
+	    # file *must* be local
+	    local tmppwd="$PWD"
+        fi
+    else
+        # file *cannot* exist
+        return 1 # failure    
+    fi
+
+    # reassemble realpath
+    echo "$tmppwd"/"${1##*/}"
+    return 1 #success
+}
+
+function_exists __pom_hierarchy ||
+__pom_hierarchy()
+{
+    local pom=`_realpath "pom.xml"`
+    POM_HIERARCHY+=("$pom")
+    while [ -n "$pom" ] && grep -q "<parent>" $pom; do
+	    ## look for a new relativePath for parent pom.xml
+        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" $pom | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+
+    	## <parent> is present but not defined, assume ../pom.xml
+    	if [ -z "$parent_pom_relative" ]; then
+    	    parent_pom_relative="../pom.xml"
+    	fi 
+
+    	## if pom exists continue else break
+    	parent_pom=`_realpath "${pom%/*}/$parent_pom_relative"`
+        if [ -n "$parent_pom" ]; then 
+            pom=$parent_pom
+    	else 
+    	    break
+        fi
+    	POM_HIERARCHY+=("$pom")
+    done
+}
+
 _mvn()
 {
     local cur prev
     COMPREPLY=()
+    POM_HIERARCHY=()
+    __pom_hierarchy
     _get_comp_words_by_ref -n : cur prev
 
     local opts="-am|-amd|-B|-C|-c|-cpu|-D|-e|-emp|-ep|-f|-fae|-ff|-fn|-gs|-h|-l|-N|-npr|-npu|-nsu|-o|-P|-pl|-q|-rf|-s|-T|-t|-U|-up|-V|-v|-X"
@@ -132,8 +186,14 @@ _mvn()
     local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true"
 
     local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
-    local profile_pom=`[ -e pom.xml ] && grep -e "<profile>" -A 1 pom.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
-    local profiles="${profile_settings}|${profile_pom}"
+    
+    local profiles="${profile_settings}|"
+    for item in ${POM_HIERARCHY[*]}
+    do
+        local profile_pom=`[ -e $item ] && grep -e "<profile>" -A 1 $item | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+        local profiles="${profiles}|${profile_pom}"
+    done
+
     local IFS=$'|\n'
 
     if [[ ${cur} == -D* ]] ; then
