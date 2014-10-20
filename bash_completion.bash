@@ -90,25 +90,25 @@ _realpath ()
 function_exists __pom_hierarchy ||
 __pom_hierarchy()
 {
-    local file=`_realpath "pom.xml"`
-    POM_HIERARCHY+=("$file")
-    while [ -n "$file" ] && grep -q "<parent>" $file; do
-	##look for a new relativePath for parent pom.xml
-        local new_file=`grep -e "<relativePath>.*</relativePath>" $file | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+    local pom=`_realpath "pom.xml"`
+    POM_HIERARCHY+=("$pom")
+    while [ -n "$pom" ] && grep -q "<parent>" $pom; do
+	    ## look for a new relativePath for parent pom.xml
+        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" $pom | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
-	## <parent> is present but not defined. Asume ../pom.xml
-	if [ -z "$new_file" ]; then
-	    new_file="../pom.xml"
-	fi 
+    	## <parent> is present but not defined, assume ../pom.xml
+    	if [ -z "$parent_pom_relative" ]; then
+    	    parent_pom_relative="../pom.xml"
+    	fi 
 
-	## if file exists continue else break
-	new_pom=`_realpath "${file%/*}/$new_file"`
-        if [ -n "$new_pom" ]; then 
-            file=$new_pom
-	else 
-	    break
+    	## if pom exists continue else break
+    	parent_pom=`_realpath "${pom%/*}/$parent_pom_relative"`
+        if [ -n "$parent_pom" ]; then 
+            pom=$parent_pom
+    	else 
+    	    break
         fi
-	POM_HIERARCHY+=("$file")
+    	POM_HIERARCHY+=("$pom")
     done
 }
 
