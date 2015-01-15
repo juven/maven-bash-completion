@@ -134,6 +134,7 @@ _mvn()
     local plugin_goals_antrun="antrun:run"
     local plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
     local plugin_goals_assembly="assembly:single|assembly:assembly"
+    local plugin_goals_build_helper="build-helper:add-resource|build-helper:add-source|build-helper:add-test-resource|build-helper:add-test-source|build-helper:attach-artifact|build-helper:bsh-property|build-helper:cpu-count|build-helper:help|build-helper:local-ip|build-helper:maven-version|build-helper:parse-version|build-helper:regex-properties|build-helper:regex-property|build-helper:released-version|build-helper:remove-project-artifact|build-helper:reserve-network-port|build-helper:timestamp-property"
     local plugin_goals_buildnumber="buildnumber:create|buildnumber:create-timestamp|buildnumber:help|buildnumber:hgchangeset"
     local plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
     local plugin_goals_checkstyle="checkstyle:checkstyle|checkstyle:check"
