@@ -134,11 +134,12 @@ _mvn()
     local plugin_goals_antrun="antrun:run"
     local plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
     local plugin_goals_assembly="assembly:single|assembly:assembly"
+    local plugin_goals_build_helper="build-helper:add-resource|build-helper:add-source|build-helper:add-test-resource|build-helper:add-test-source|build-helper:attach-artifact|build-helper:bsh-property|build-helper:cpu-count|build-helper:help|build-helper:local-ip|build-helper:maven-version|build-helper:parse-version|build-helper:regex-properties|build-helper:regex-property|build-helper:released-version|build-helper:remove-project-artifact|build-helper:reserve-network-port|build-helper:timestamp-property"
     local plugin_goals_buildnumber="buildnumber:create|buildnumber:create-timestamp|buildnumber:help|buildnumber:hgchangeset"
     local plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
     local plugin_goals_checkstyle="checkstyle:checkstyle|checkstyle:check"
     local plugin_goals_cobertura="cobertura:cobertura"
-    local plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-duplicate|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:list|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
+    local plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-duplicate|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:help|dependency:list|dependency:list-repositories|dependency:properties|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
     local plugin_goals_deploy="deploy:deploy-file"
     local plugin_goals_ear="ear:ear|ear:generate-application-xml"
     local plugin_goals_eclipse="eclipse:clean|eclipse:eclipse"
@@ -185,7 +186,7 @@ _mvn()
     ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
     local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '_' '-' | tr '\n' '|'`
 
-    local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true"
+    local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true||-DperformRelease=true|-Dgpg.skip=true"
 
     local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
     
