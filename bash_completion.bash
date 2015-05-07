@@ -92,9 +92,9 @@ __pom_hierarchy()
 {
     local pom=`_realpath "pom.xml"`
     POM_HIERARCHY+=("$pom")
-    while [ -n "$pom" ] && grep -q "<parent>" $pom; do
+    while [ -n "$pom" ] && grep -q "<parent>" "$pom"; do
 	    ## look for a new relativePath for parent pom.xml
-        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" $pom | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" "$pom" | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
     	## <parent> is present but not defined, assume ../pom.xml
     	if [ -z "$parent_pom_relative" ]; then
