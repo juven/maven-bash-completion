@@ -92,9 +92,9 @@ __pom_hierarchy()
 {
     local pom=`_realpath "pom.xml"`
     POM_HIERARCHY+=("$pom")
-    while [ -n "$pom" ] && grep -q "<parent>" $pom; do
+    while [ -n "$pom" ] && grep -q "<parent>" "$pom"; do
 	    ## look for a new relativePath for parent pom.xml
-        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" $pom | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
+        local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" "$pom" | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
     	## <parent> is present but not defined, assume ../pom.xml
     	if [ -z "$parent_pom_relative" ]; then
@@ -134,11 +134,13 @@ _mvn()
     local plugin_goals_antrun="antrun:run"
     local plugin_goals_archetype="archetype:generate|archetype:create-from-project|archetype:crawl"
     local plugin_goals_assembly="assembly:single|assembly:assembly"
+    local plugin_goals_build_helper="build-helper:add-resource|build-helper:add-source|build-helper:add-test-resource|build-helper:add-test-source|build-helper:attach-artifact|build-helper:bsh-property|build-helper:cpu-count|build-helper:help|build-helper:local-ip|build-helper:maven-version|build-helper:parse-version|build-helper:regex-properties|build-helper:regex-property|build-helper:released-version|build-helper:remove-project-artifact|build-helper:reserve-network-port|build-helper:timestamp-property"
     local plugin_goals_buildnumber="buildnumber:create|buildnumber:create-timestamp|buildnumber:help|buildnumber:hgchangeset"
     local plugin_goals_cargo="cargo:start|cargo:run|cargo:stop|cargo:deploy|cargo:undeploy|cargo:help"
     local plugin_goals_checkstyle="checkstyle:checkstyle|checkstyle:check"
     local plugin_goals_cobertura="cobertura:cobertura"
-    local plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-duplicate|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:list|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
+    local plugin_goals_findbugs="findbugs:findbugs|findbugs:gui|findbugs:help"
+    local plugin_goals_dependency="dependency:analyze|dependency:analyze-dep-mgt|dependency:analyze-duplicate|dependency:analyze-only|dependency:analyze-report|dependency:build-classpath|dependency:copy|dependency:copy-dependencies|dependency:get|dependency:go-offline|dependency:help|dependency:list|dependency:list-repositories|dependency:properties|dependency:purge-local-repository|dependency:resolve|dependency:resolve-plugins|dependency:sources|dependency:tree|dependency:unpack|dependency:unpack-dependencies"
     local plugin_goals_deploy="deploy:deploy-file"
     local plugin_goals_ear="ear:ear|ear:generate-application-xml"
     local plugin_goals_eclipse="eclipse:clean|eclipse:eclipse"
@@ -150,14 +152,14 @@ _mvn()
     local plugin_goals_gpg="gpg:sign|gpg:sign-and-deploy-file"
     local plugin_goals_grails="grails:clean|grails:config-directories|grails:console|grails:create-controller|grails:create-domain-class|grails:create-integration-test|grails:create-pom|grails:create-script|grails:create-service|grails:create-tag-lib|grails:create-unit-test|grails:exec|grails:generate-all|grails:generate-controller|grails:generate-views|grails:help|grails:init|grails:init-plugin|grails:install-templates|grails:list-plugins|grails:maven-clean|grails:maven-compile|grails:maven-functional-test|grails:maven-grails-app-war|grails:maven-test|grails:maven-war|grails:package|grails:package-plugin|grails:run-app|grails:run-app-https|grails:run-war|grails:set-version|grails:test-app|grails:upgrade|grails:validate|grails:validate-plugin|grails:war"
     local plugin_goals_gwt="gwt:browser|gwt:clean|gwt:compile|gwt:compile-report|gwt:css|gwt:debug|gwt:eclipse|gwt:eclipseTest|gwt:generateAsync|gwt:help|gwt:i18n|gwt:mergewebxml|gwt:resources|gwt:run|gwt:run-codeserver|gwt:sdkInstall|gwt:source-jar|gwt:soyc|gwt:test"
-    local plugin_goals_help="help:active-profiles|help:all-profiles|help:describe|help:effective-pom|help:effective-settings|help:evaluate|help:expressions|help:system"
+    local plugin_goals_help="help:active-profiles|help:all-profiles|help:describe|help:effective-pom|help:effective-settings|help:evaluate|help:expressions|help:help|help:system"
     local plugin_goals_hibernate3="hibernate3:hbm2ddl|hibernate3:help"
     local plugin_goals_idea="idea:clean|idea:idea"
     local plugin_goals_install="install:install-file"
     local plugin_goals_jacoco="jacoco:check|jacoco:dump|jacoco:help|jacoco:instrument|jacoco:merge|jacoco:prepare-agent|jacoco:prepare-agent-integration|jacoco:report|jacoco:report-integration|jacoco:restore-instrumented-classes"
     local plugin_goals_javadoc="javadoc:javadoc|javadoc:jar|javadoc:aggregate"
     local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
-    local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
+    local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:undeploy-artifact|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
     local plugin_goals_jetty="jetty:run|jetty:run-exploded"
     local plugin_goals_jxr="jxr:jxr"
     local plugin_goals_license="license:format|license:check"
@@ -168,22 +170,24 @@ _mvn()
     local plugin_goals_repository="repository:bundle-create|repository:bundle-pack|repository:help"
     local plugin_goals_scm="scm:add|scm:checkin|scm:checkout|scm:update|scm:status"
     local plugin_goals_site="site:site|site:deploy|site:run|site:stage|site:stage-deploy"
-    local plugin_goals_sonar="sonar:sonar"
+    local plugin_goals_sonar="sonar:sonar|sonar:help"
     local plugin_goals_source="source:aggregate|source:jar|source:jar-no-fork"
     local plugin_goals_surefire="surefire:test"
-    local plugin_goals_tomcat6="tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
-    local plugin_goals_tomcat7="tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
-    local plugin_goals_tomcat="tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy|tomcat:undeploy"
+    local plugin_goals_tomcat6="tomcat6:help|tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
+    local plugin_goals_tomcat7="tomcat7:help|tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
+    local plugin_goals_tomcat="tomcat:help|tomcat:start|tomcat:stop|tomcat:deploy|tomcat:undeploy"
+    local plugin_goals_liberty="liberty:create-server|liberty:start-server|liberty:stop-server|liberty:run-server|liberty:deploy|liberty:undeploy|liberty:java-dump-server|liberty:dump-server|liberty:package-server"
     local plugin_goals_versions="versions:display-dependency-updates|versions:display-plugin-updates|versions:display-property-updates|versions:update-parent|versions:update-properties|versions:update-child-modules|versions:lock-snapshots|versions:unlock-snapshots|versions:resolve-ranges|versions:set|versions:use-releases|versions:use-next-releases|versions:use-latest-releases|versions:use-next-snapshots|versions:use-latest-snapshots|versions:use-next-versions|versions:use-latest-versions|versions:commit|versions:revert"
     local plugin_goals_vertx="vertx:init|vertx:runMod|vertx:pullInDeps|vertx:fatJar"
     local plugin_goals_war="war:war|war:exploded|war:inplace|war:manifest"
     local plugin_goals_spring_boot="spring-boot:run|spring-boot:repackage"
     local plugin_goals_jgitflow="jgitflow:feature-start|jgitflow:feature-finish|jgitflow:release-start|jgitflow:release-finish|jgitflow:hotfix-start|jgitflow:hotfix-finish|jgitflow:build-number"
+    local plugin_goals_wildfly="wildfly:add-resource|wildfly:deploy|wildfly:deploy-only|wildfly:deploy-artifact|wildfly:redeploy|wildfly:redeploy-only|wildfly:undeploy|wildfly:undeploy-artifact|wildfly:run|wildfly:start|wildfly:shutdown|wildfly:execute-commands"
 
     ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
     local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '_' '-' | tr '\n' '|'`
 
-    local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true"
+    local options="-Dmaven.test.skip=true|-DskipTests|-DskipITs|-Dtest|-Dit.test|-DfailIfNoTests|-Dmaven.surefire.debug|-DenableCiProfile|-Dpmd.skip=true|-Dcheckstyle.skip=true|-Dtycho.mode=maven|-Dmaven.javadoc.skip=true|-Dgwt.compiler.skip|-Dcobertura.skip=true|-Dfindbugs.skip=true||-DperformRelease=true|-Dgpg.skip=true|-DforkCount"
 
     local profile_settings=`[ -e ~/.m2/settings.xml ] && grep -e "<profile>" -A 1 ~/.m2/settings.xml | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
     
