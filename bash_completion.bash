@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function_exists()
 {
 	declare -F $1 > /dev/null
