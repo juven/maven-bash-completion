@@ -258,7 +258,7 @@ function _maven_quiet {
    if tty -s <&1
    then
       OUTPUT_LINES=$(echo "$OUTPUT" | wc -l)
-      if [ $OUTPUT_LINES > $SCREEN_LINES ]
+      if [ $OUTPUT_LINES -gt $SCREEN_LINES ]
       then
          echo "$OUTPUT" | less
       else
@@ -271,5 +271,12 @@ function _maven_quiet {
 
 alias mvn=_maven_quiet
 
+function _maven_help {
+   mvn help:describe -Ddetail -Dcmd=$1
+}
+
+alias mvnh=_maven_help
+
 complete -o default -F _mvn -o nospace mvn
 complete -o default -F _mvn -o nospace mvnDebug
+complete -o default -F _mvn -o nospace mvnh
