@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function_exists()
 {
 	declare -F $1 > /dev/null
@@ -249,5 +251,34 @@ _mvn()
     __ltrim_colon_completions "$cur"
 }
 
+function _maven_quiet { 
+   SCREEN_LINES=$(tput lines)
+   SCREEN_WIDTH=$(tput cols)
+   echo
+   #TODO: test first tty
+   OUTPUT=$(/usr/bin/mvn $@ | grep -v "^\[INFO\]" | grep -v "^\[WARNING\]" | sed 's/^\[ERROR\] //' | fold -w $SCREEN_WIDTH)
+   if tty -s <&1
+   then
+      OUTPUT_LINES=$(echo "$OUTPUT" | wc -l)
+      if [ $OUTPUT_LINES -gt $SCREEN_LINES ]
+      then
+         echo "$OUTPUT" | less
+      else
+         echo "$OUTPUT"
+      fi
+   else
+      echo "$OUTPUT"
+   fi
+}
+
+alias mvn=_maven_quiet
+
+function _maven_help {
+   mvn help:describe -Ddetail -Dcmd=$1
+}
+
+alias mvnh=_maven_help
+
 complete -o default -F _mvn -o nospace mvn
 complete -o default -F _mvn -o nospace mvnDebug
+complete -o default -F _mvn -o nospace mvnh
