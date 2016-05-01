@@ -169,6 +169,7 @@ _mvn()
     local plugin_goals_properties="properties:read-project-properties|properties:write-project-properties|properties:write-active-profile-properties|properties:set-system-properties"
     local plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
     local plugin_goals_repository="repository:bundle-create|repository:bundle-pack|repository:help"
+    local plugin_goals_scala="scala:add-source|scala:cc|scala:cctest|scala:compile|scala:console|scala:doc|scala:doc-jar|scala:help|scala:run|scala:script|scala:testCompile"
     local plugin_goals_scm="scm:add|scm:checkin|scm:checkout|scm:update|scm:status"
     local plugin_goals_site="site:site|site:deploy|site:run|site:stage|site:stage-deploy"
     local plugin_goals_sonar="sonar:sonar|sonar:help"
@@ -184,7 +185,6 @@ _mvn()
     local plugin_goals_spring_boot="spring-boot:run|spring-boot:repackage"
     local plugin_goals_jgitflow="jgitflow:feature-start|jgitflow:feature-finish|jgitflow:release-start|jgitflow:release-finish|jgitflow:hotfix-start|jgitflow:hotfix-finish|jgitflow:build-number"
     local plugin_goals_wildfly="wildfly:add-resource|wildfly:deploy|wildfly:deploy-only|wildfly:deploy-artifact|wildfly:redeploy|wildfly:redeploy-only|wildfly:undeploy|wildfly:undeploy-artifact|wildfly:run|wildfly:start|wildfly:shutdown|wildfly:execute-commands"
-    local plugin_goals_scala="scala:add-source|scala:cc|scala:cctest|scala:compile|scala:console|scala:doc|scala:doc-jar|scala:help|scala:run|scala:script|scala:testCompile"
 
     ## some plugin (like jboss-as) has '-' which is not allowed in shell var name, to use '_' then replace
     local common_plugins=`compgen -v | grep "^plugin_goals_.*" | sed 's/plugin_goals_//g' | tr '_' '-' | tr '\n' '|'`
