@@ -110,6 +110,8 @@ __pom_hierarchy()
         fi
     	POM_HIERARCHY+=("$pom")
     done
+    # Include also any pom from modules
+    for pom in $(find -mindepth 2 -name pom.xml); do POM_HIERARCHY+=("$pom"); done
 }
 
 _mvn()
