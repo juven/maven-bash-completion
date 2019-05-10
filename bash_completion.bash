@@ -66,13 +66,13 @@ _realpath ()
     if [[ -f "$1" ]]
     then
         # file *must* exist
-        if cd "$(echo "${1%/*}")" &>/dev/null
+        if builtin cd "$(echo "${1%/*}")" &>/dev/null
         then
 	    # file *may* not be local
 	    # exception is ./file.ext
 	    # try 'cd .; cd -;' *works!*
  	    local tmppwd="$PWD"
-	    cd - &>/dev/null
+	    builtin cd - &>/dev/null
         else
 	    # file *must* be local
 	    local tmppwd="$PWD"
