@@ -161,10 +161,15 @@ _mvn()
     local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:undeploy-artifact|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
     local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
+    local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
+    #mvn help:describe -Dplugin=com.google.cloud.tools:jib-maven-plugin:1.2.0
+    local plugin_goals_jib="jib:_skaffold-files|jib:_skaffold-files-v2|jib:_skaffold-package-goals|jib:build|jib:buildTar|jib:dockerBuild"
     local plugin_goals_jxr="jxr:jxr"
     local plugin_goals_license="license:format|license:check"
     local plugin_goals_liquibase="liquibase:changelogSync|liquibase:changelogSyncSQL|liquibase:clearCheckSums|liquibase:dbDoc|liquibase:diff|liquibase:dropAll|liquibase:help|liquibase:migrate|liquibase:listLocks|liquibase:migrateSQL|liquibase:releaseLocks|liquibase:rollback|liquibase:rollbackSQL|liquibase:status|liquibase:tag|liquibase:update|liquibase:updateSQL|liquibase:updateTestingRollback"
     local plugin_goals_nexus_staging="nexus-staging:close|nexus-staging:deploy|nexus-staging:deploy-staged|nexus-staging:deploy-staged-repository|nexus-staging:drop|nexus-staging:help|nexus-staging:promote|nexus-staging:rc-close|nexus-staging:rc-drop|nexus-staging:rc-list|nexus-staging:rc-list-profiles|nexus-staging:rc-promote|nexus-staging:rc-release|nexus-staging:release"
+    #mvn help:describe -Dplugin=io.quarkus:quarkus-maven-plugin:0.15.0
+    local plugin_goals_quarkus="quarkus:add-extension|quarkus:add-extensions|quarkus:analyze-call-tree|quarkus:build|quarkus:create|quarkus:create-example-config|quarkus:dev|quarkus:help|quarkus:list-extensions|quarkus:native-image|quarkus:remote-dev"    
     local plugin_goals_pmd="pmd:pmd|pmd:cpd|pmd:check|pmd:cpd-check"
     local plugin_goals_properties="properties:read-project-properties|properties:write-project-properties|properties:write-active-profile-properties|properties:set-system-properties"
     local plugin_goals_release="release:clean|release:prepare|release:rollback|release:perform|release:stage|release:branch|release:update-versions"
