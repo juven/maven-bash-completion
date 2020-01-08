@@ -1,6 +1,10 @@
 # Maven Bash Completion
 
-Maven by default does not distribute with a Bash auto completion script, only [a very simple guide](http://maven.apache.org/guides/mini/guide-bash-m2-completion.html) is provided. This script gives you more to help your daily Maven build.
+Maven by default does not distribute with a Bash auto completion script, only 
+[a very simple guide](http://maven.apache.org/guides/mini/guide-bash-m2-completion.html) is 
+provided. This script gives you more to help your daily Maven build.
+
+[Maven Wrapper](https://github.com/takari/maven-wrapper) is supported, too.
 
 ## Demo
 
