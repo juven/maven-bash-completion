@@ -82,6 +82,12 @@ _realpath ()
         return 1 # failure    
     fi
 
+    # suppress shell session termination messages on macOS
+    shell_session_save()
+    {
+        false
+    }
+
     # reassemble realpath
     echo "$tmppwd"/"${1##*/}"
     return 1 #success
