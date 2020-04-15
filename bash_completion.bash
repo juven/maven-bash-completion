@@ -174,6 +174,7 @@ _mvn()
     local plugin_goals_site="site:site|site:deploy|site:run|site:stage|site:stage-deploy"
     local plugin_goals_sonar="sonar:sonar|sonar:help"
     local plugin_goals_source="source:aggregate|source:jar|source:jar-no-fork"
+    local plugin_goals_spotbugs="spotbugs:spotbugs|spotbugs:check|spotbugs:gui|spotbugs:help"
     local plugin_goals_surefire="surefire:test"
     local plugin_goals_tomcat6="tomcat6:help|tomcat6:run|tomcat6:run-war|tomcat6:run-war-only|tomcat6:stop|tomcat6:deploy|tomcat6:undeploy"
     local plugin_goals_tomcat7="tomcat7:help|tomcat7:run|tomcat7:run-war|tomcat7:run-war-only|tomcat7:deploy"
