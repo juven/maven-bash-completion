@@ -161,7 +161,6 @@ _mvn()
     local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:undeploy-artifact|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
     local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
-    local plugin_goals_jetty="jetty:run|jetty:run-exploded|jetty:run-forked"
     #mvn help:describe -Dplugin=com.google.cloud.tools:jib-maven-plugin:1.2.0
     local plugin_goals_jib="jib:_skaffold-files|jib:_skaffold-files-v2|jib:_skaffold-package-goals|jib:build|jib:buildTar|jib:dockerBuild"
     local plugin_goals_jxr="jxr:jxr"
