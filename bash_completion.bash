@@ -157,7 +157,7 @@ _mvn()
     local plugin_goals_idea="idea:clean|idea:idea"
     local plugin_goals_install="install:install-file"
     local plugin_goals_jacoco="jacoco:check|jacoco:dump|jacoco:help|jacoco:instrument|jacoco:merge|jacoco:prepare-agent|jacoco:prepare-agent-integration|jacoco:report|jacoco:report-integration|jacoco:restore-instrumented-classes"
-    local plugin_goals_jasypt="jasypt:decrypt|jasypt:encrypt|jasypt:help|jasypt:load"
+    local plugin_goals_jasypt="jasypt:decrypt|jasypt:decrypt-value|jasypt:encrypt|jasypt:encrypt-value|jasypt:help|jasypt:load"
     local plugin_goals_javadoc="javadoc:javadoc|javadoc:jar|javadoc:aggregate"
     local plugin_goals_jboss="jboss:start|jboss:stop|jboss:deploy|jboss:undeploy|jboss:redeploy"
     local plugin_goals_jboss_as="jboss-as:add-resource|jboss-as:deploy|jboss-as:deploy-only|jboss-as:deploy-artifact|jboss-as:redeploy|jboss-as:redeploy-only|jboss-as:undeploy|jboss-as:undeploy-artifact|jboss-as:run|jboss-as:start|jboss-as:shutdown|jboss-as:execute-commands"
