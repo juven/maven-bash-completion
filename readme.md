@@ -20,7 +20,7 @@ Example install manually:
 
 Example install as a one-line command line call for Debian and other distro:
 
-`sudo wget https://raw.github.com/dimaj/maven-bash-completion/master/bash_completion.bash --output-document /etc/bash_completion.d/mvn`
+`sudo wget https://raw.github.com/juven/maven-bash-completion/master/bash_completion.bash --output-document /etc/bash_completion.d/mvn`
 
 ## Usage
 
