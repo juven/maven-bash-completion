@@ -116,6 +116,8 @@ __pom_hierarchy()
         fi
     	POM_HIERARCHY+=("$pom")
     done
+    # Include also any pom from modules
+    for pom in $(find -mindepth 2 -name pom.xml); do POM_HIERARCHY+=("$pom"); done
 }
 
 _mvn()
@@ -204,7 +206,7 @@ _mvn()
     local profiles="${profile_settings}|"
     for item in ${POM_HIERARCHY[*]}
     do
-        local profile_pom=`[ -e $item ] && grep -e "<profile>" -A 1 $item | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
+        local profile_pom=`[ -e $item ] && grep -e "<profile>" -A 1000 $item | grep --before-context=1000 '</profiles>' | grep -e "<id>.*</id>" | sed 's/.*<id>//' | sed 's/<\/id>.*//g' | tr '\n' '|' `
         local profiles="${profiles}|${profile_pom}"
     done
 
