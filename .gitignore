@@ -1,0 +1,30 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# IDEA
+.idea
+*.ipr
+*.iml
+*.iws
+
+# NetBeans
+nb-configuration.xml
+
+# OSX
+.DS_Store
+
+# VS Code
+.vscode/
+
+# formatter-maven-plugin
+.cache/
