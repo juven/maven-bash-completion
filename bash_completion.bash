@@ -1,7 +1,7 @@
 function_exists()
 {
-	declare -F $1 > /dev/null
-	return $?
+    declare -F $1 > /dev/null
+    return $?
 }
 
 function_exists _get_comp_words_by_ref ||
@@ -36,14 +36,14 @@ _get_comp_words_by_ref ()
 function_exists __ltrim_colon_completions ||
 __ltrim_colon_completions()
 {
-	if [[ "$1" == *:* && "$COMP_WORDBREAKS" == *:* ]]; then
-		# Remove colon-word prefix from COMPREPLY items
-		local colon_word=${1%${1##*:}}
-		local i=${#COMPREPLY[*]}
-		while [[ $((--i)) -ge 0 ]]; do
-			COMPREPLY[$i]=${COMPREPLY[$i]#"$colon_word"}
-		done
-	fi
+    if [[ "$1" == *:* && "$COMP_WORDBREAKS" == *:* ]]; then
+        # Remove colon-word prefix from COMPREPLY items
+        local colon_word=${1%${1##*:}}
+        local i=${#COMPREPLY[*]}
+        while [[ $((--i)) -ge 0 ]]; do
+            COMPREPLY[$i]=${COMPREPLY[$i]#"$colon_word"}
+        done
+    fi
 }
 
 function_exists __find_mvn_projects ||
@@ -68,14 +68,14 @@ _realpath ()
         # file *must* exist
         if cd "$(echo "${1%/*}")" &>/dev/null
         then
-	    # file *may* not be local
-	    # exception is ./file.ext
-	    # try 'cd .; cd -;' *works!*
- 	    local tmppwd="$PWD"
-	    cd - &>/dev/null
+        # file *may* not be local
+        # exception is ./file.ext
+        # try 'cd .; cd -;' *works!*
+         local tmppwd="$PWD"
+        cd - &>/dev/null
         else
-	    # file *must* be local
-	    local tmppwd="$PWD"
+        # file *must* be local
+        local tmppwd="$PWD"
         fi
     else
         # file *cannot* exist
@@ -99,22 +99,22 @@ __pom_hierarchy()
     local pom=`_realpath "pom.xml"`
     POM_HIERARCHY+=("$pom")
     while [ -n "$pom" ] && grep -q "<parent>" "$pom"; do
-	    ## look for a new relativePath for parent pom.xml
+        ## look for a new relativePath for parent pom.xml
         local parent_pom_relative=`grep -e "<relativePath>.*</relativePath>" "$pom" | sed 's/.*<relativePath>//' | sed 's/<\/relativePath>.*//g'`
 
-    	## <parent> is present but not defined, assume ../pom.xml
-    	if [ -z "$parent_pom_relative" ]; then
-    	    parent_pom_relative="../pom.xml"
-    	fi
+        ## <parent> is present but not defined, assume ../pom.xml
+        if [ -z "$parent_pom_relative" ]; then
+            parent_pom_relative="../pom.xml"
+        fi
 
-    	## if pom exists continue else break
-    	parent_pom=`_realpath "${pom%/*}/$parent_pom_relative"`
+        ## if pom exists continue else break
+        parent_pom=`_realpath "${pom%/*}/$parent_pom_relative"`
         if [ -n "$parent_pom" ]; then
             pom=$parent_pom
-    	else
-    	    break
+        else
+            break
         fi
-    	POM_HIERARCHY+=("$pom")
+        POM_HIERARCHY+=("$pom")
     done
 }
 
